@@ -1,0 +1,44 @@
+application: jot-vertnet
+version: emailer
+runtime: python27
+threadsafe: true
+api_version: 1
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
+
+handlers:
+
+# Statics
+
+- url: /js
+  static_dir: www/js
+
+- url: /css
+  static_dir: www/css
+
+- url: /fonts
+  static_dir: www/fonts
+
+- url: /img
+  static_dir: www/img
+
+- url: /templates
+  static_dir: www/templates
+
+# Services
+
+- url: /service/providers.*
+  script: service.providers.main
+  
+- url: /service/emailer.*
+  script: service.emailer.main
+
+# URL handler
+
+- url: /.*
+  script: app.main
+  login: required

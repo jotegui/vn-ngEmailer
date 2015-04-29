@@ -1,0 +1,7 @@
+# dev files
+env/
+*.sublime*
+*.pyc
+
+# API keys
+*.key
