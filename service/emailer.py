@@ -3,6 +3,7 @@ import urllib
 import urllib2
 import json
 import logging
+import time
 
 def apikey(testing=False):
     
@@ -55,10 +56,15 @@ def main(environ, start_response):
         repo = i['github_reponame']
 
         logging.info("Sending to {0}/{1}".format(org, repo))
-        r = createIssue(org, repo, title, body)
         
-        if r.code != 201:
+        try:
+            r = createIssue(org, repo, title, body)
+            if r.code != 201:
+                failed.append(i)
+        except:
             failed.append(i)
+
+        time.sleep(2)
     
     resp = 'failed' if len(failed)>0 else 'success'
     d = {

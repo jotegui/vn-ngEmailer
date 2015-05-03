@@ -24,6 +24,18 @@ Controllers.controller('MainController', ['$scope', '$filter', 'providers', 'Iss
 					name: 'jotegui/statReports',
 					github_orgname: 'jotegui',
 					github_reponame: 'statReports'
+				},{
+					name: 'jotegui/BIDDSAT',
+					github_orgname: 'jotegui',
+					github_reponame: 'BIDDSAT'
+				},{
+					name: 'jotegui/geo-taxo-quality',
+					github_orgname: 'jotegui',
+					github_reponame: 'geo-taxo-quality'
+				},{
+					name: 'jotegui/QualityAPI',
+					github_orgname: 'jotegui',
+					github_reponame: 'QualityAI'
 				})
 			},
 			function error(errorResponse) {

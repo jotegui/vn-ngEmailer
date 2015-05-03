@@ -45,9 +45,6 @@ class MainPage(webapp2.RequestHandler):
     		'gtuco.btuco@gmail.com',
     		'robert.guralnick@colorado.edu'
 		]
-    	logging.warning(user.email())
-    	logging.info(user_list)
-    	logging.info(user.email().lower() in user_list)
 
     	if user.email().lower() in user_list:
         	template = JINJA_ENVIRONMENT.get_template('index.html')
