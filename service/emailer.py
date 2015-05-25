@@ -18,10 +18,10 @@ def apikey(testing=False):
     return api_key
 
 
-def createIssue(org, repo, title, body):
+def createIssue(org, repo, labels, title, body):
     
     key = apikey()
-    data = {'title': title, 'body': body}
+    data = {'title': title, 'body': body, 'labels': labels}
     url = 'https://api.github.com/repos/{0}/{1}/issues'.format(org, repo)
 
     req = urllib2.Request(url)
@@ -46,6 +46,7 @@ def main(environ, start_response):
     title = data['title']
     body = data['body']
     providers = data['providers']
+    labels = data['labels']
     failed = []
 
     # r = createIssue(org, repo, title, body)
@@ -58,7 +59,7 @@ def main(environ, start_response):
         logging.info("Sending to {0}/{1}".format(org, repo))
         
         try:
-            r = createIssue(org, repo, title, body)
+            r = createIssue(org, repo, labels, title, body)
             if r.code != 201:
                 failed.append(i)
         except:

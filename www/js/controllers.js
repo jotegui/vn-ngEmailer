@@ -11,8 +11,10 @@ Controllers.controller('MainController', ['$scope', '$filter', 'providers', 'Iss
 		$scope.listItems = [];
 		$scope.issue = {
 			title: "",
-			body: ""
+			body: "",
+			labels: []
 		}
+		$scope.issue.labels.push("report");
 		console.log($scope.issue);
 
 		// Get list of providers
@@ -20,6 +22,7 @@ Controllers.controller('MainController', ['$scope', '$filter', 'providers', 'Iss
 			function success(response){
 				console.log("Got providers");
 				$scope.listItems = response.rows;
+				// Add testing rows
 				$scope.listItems.push({
 					name: 'jotegui/statReports',
 					github_orgname: 'jotegui',
@@ -79,6 +82,28 @@ Controllers.controller('MainController', ['$scope', '$filter', 'providers', 'Iss
 			$scope.searchName = "";
 		}
 
+		// Add label
+		$scope.addLabel = function() {
+			console.log();
+			if ($scope.newLabel != "" && $scope.newLabel != undefined) {
+				
+				if ($scope.issue.labels.indexOf($scope.newLabel) == -1) {
+					console.log("Adding label "+$scope.newLabel);
+					$scope.issue.labels.push($scope.newLabel);
+				} else {
+					console.log("Label "+$scope.newLabel+" already exists, skipping.");
+				}
+
+				$scope.newLabel = "";
+			}
+		}
+
+		// Remove label
+		$scope.removeLabel = function(label) {
+			console.log("Removing label "+label);
+			$scope.issue.labels.splice($scope.issue.labels.indexOf(label), 1);
+		}
+
 		// Send issue
 		$scope.sendIssue = function() {
 			$scope.sendBtn = 'Sending...';
@@ -102,3 +127,22 @@ Controllers.controller('MainController', ['$scope', '$filter', 'providers', 'Iss
 		}
 	}
 ]);
+
+
+// EXTRA STUFF
+/*
+This directive allows us to pass a function in on an enter key to do what we want.
+ */
+app.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.ngEnter);
+                });
+ 
+                event.preventDefault();
+            }
+        });
+    };
+});
